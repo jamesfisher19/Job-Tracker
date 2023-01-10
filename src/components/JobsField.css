@@ -1,0 +1,42 @@
+.scrollable-div::-webkit-scrollbar {
+width: 12px; /* width of the scrollbar */
+background-color: #F5F5F5; /* color of the scrollbar */
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+border-radius: 10px; /* roundness of the scrollbar handle */
+background-color: #000000; /* color of the scrollbar handle */
+}
+  
+.job-field{
+    box-shadow: 0 1px 10px 0 rgb(0 0 0 / 19%) inset;
+    background-color:#F7FFE7;
+    position: absolute;
+    right: 80px;
+    top: 148px;
+    width: 940px;
+    height: 560px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+.title{
+
+}
+.company{
+    background-color: #1E5128;
+    text-align: center;
+    color: #D7E9A8;
+}
+.location{
+    
+}
+.link{
+    
+}
+.deadline{
+    
+}
+.applied{
+    
+}

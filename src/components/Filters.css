@@ -1,0 +1,19 @@
+li {
+  font-size: 23px;
+  color: #112e16;
+  text-shadow: 1px 1px 1px rgb(138, 138, 138);
+  font-weight: bold;
+  line-height: 50px;
+  margin-left: 10px;
+}
+input[type='checkbox'] {
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+}
