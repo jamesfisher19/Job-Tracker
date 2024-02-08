@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import './Filters.css';
+import '../styles/Filters.css';
 // Title for Filters
 const FilterHeader = ({ filter_title }) => {
   return (

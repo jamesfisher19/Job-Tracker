@@ -1,20 +1,19 @@
-import {FilterHeader, Checkboxes} from './components/Filters';
-import Header from './components/Heading';
-import './components/Filters.css';
-import Form from './components/JobsField.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Tracker from './Pages/Tracker.js';
+import Home from './Pages/Home.js';
+
 function App() {
   return (
-    <div style={{ background: "#D7E9A8", height: "100vh", width: "100%" }}>
+    <Router>
       <div className="App">
-        <Header />
-        <FilterHeader />
-        <Checkboxes />
-        <Form/>
+        <Routes>
+          <Route exact path="/" element={<Home/>} />
+          <Route path="/tracker" element={<Tracker/>} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
-
 export default App;
 
 // https://www.youtube.com/watch?v=w7ejDZ8SWv8
