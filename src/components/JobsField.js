@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import '../styles/JobsField.css';
 import { firestore } from "../Firebase/sdks";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
-import { collection, query, where, doc, getDocs, setDoc, addDoc } from "firebase/firestore";
+import { collection, query, doc, getDocs, addDoc, deleteDoc } from "firebase/firestore";
 
 const Form = () => {
   const [jobs, setJobs] = useState([]);
-  const [user, setUser] = useState(null); // Add a state to hold the current user
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser); // Update the user state
+      setUser(currentUser);
     });
 
-    return () => unsubscribe(); // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   const handleSubmit = async (event) => {
@@ -77,6 +77,26 @@ const Form = () => {
     fetchJobs();
   }, [user]);
 
+  const handleDelete = async (jobId) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this job?");
+    
+    if (isConfirmed && user) {
+      try {
+        await deleteDoc(doc(firestore, `users/${user.uid}/jobs`, jobId));
+        setJobs(jobs.filter(job => job.id !== jobId));
+        console.log("Job deleted");
+      } catch (e) {
+        console.error("Error deleting job: ", e);
+      }
+    } else {
+      if (!user) {
+        console.error("User not authenticated");
+      }
+    }
+  };
+  
+
+
   return (
     <div>
         <form onSubmit={handleSubmit}>
@@ -110,23 +130,23 @@ const Form = () => {
             <input type="checkbox" name="applied" value="true" />
         </label>
         <br />
-        <input type="submit" value="New Job" />
+        <input type="submit" value="Add New Job" />
         </form>  
         <div className="job-field">
-            <ul>
-            {jobs.map((job)=> (
-                    <div key={job.company}>
-                    <h3 className="company">{job.company}</h3>
-                    <p className="title">Title: {job.title}</p>
-                    <p className="location">Location: {job.location}</p>
-                    <p className="link">Link: {job.link}</p>
-                    <p className="deadline">Deadline: {job.deadline}</p>
-                    <p className="applied">Applied: {job.applied ? 'Yes' : 'No'}</p>
-                  </div>
-                ))}                
-            </ul>
-
-        </div>      
+          <ul>
+            {jobs.map((job) => (
+              <div key={job.id}>
+                <h3 className="company">{job.company}</h3>
+                <p className="title">Title: {job.title}</p>
+                <p className="location">Location: {job.location}</p>
+                <p className="link">Link: {job.link}</p>
+                <p className="deadline">Deadline: {job.deadline}</p>
+                <p className="applied">Applied: {job.applied ? 'Yes' : 'No'}</p>
+                <button onClick={() => handleDelete(job.id)}>Delete Job</button>
+              </div>
+            ))}
+          </ul>
+        </div>    
     </div>
 
   );
